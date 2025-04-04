@@ -5,6 +5,11 @@ It demonstrates how to establish a **highly available, BGP-based VPN connection*
 In this project I will be creating an initial AWS environment with 2 subnets, 2 EC2 instances, a TGW and VPC attachment and a default route pointing at the TGW. 
 The simulated on-premises environment - 1 public subnet, 2 private subnets. The public subnet has 2 Ubuntu + strongSwan + Free VPN endpoints.
 
+<br>
+
+![image](https://github.com/user-attachments/assets/d32611a4-a5be-49de-ac97-5fa4d9fccf6d)
+Original architecture diagram from [Adrian Cantrill](https://www.youtube.com/adriancantrill)
+
 ## STAGE ONE
 
 - To first create the intial environments click on the provided [1-click deployment link](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/create/review?templateURL=https://learn-cantrill-labs.s3.amazonaws.com/aws-hybrid-bgpvpn/BGPVPNINFRA.yaml&stackName=ADVANCEDVPNDEMO). Make sure to login to an AWS account with full admin permission and you're using the us-east-1 region. Once you clicked on the link scroll down to the bottom, check the box, and click create stack.
@@ -38,7 +43,16 @@ Make sure the stack has moved to a **create complete** state before moving on.
    - Once connected run the command **ping IP_ADDRESS_OF_AWS_EC2-B** and there should be no response
    - Click terminate on Session Manager and that is the end of Stage 1.
    <img src="https://github.com/user-attachments/assets/f09cc632-dd6a-4899-ae5b-9844aea936af" alt="image" width="820" height="240"/>
+   
+<br>
 
+This is what we have created so far
+
+<br>
+
+![image](https://github.com/user-attachments/assets/2d50f2f2-b47d-40db-9a01-775f79008df6)
+
+<br>
 
 ## STAGE TWO
 
@@ -64,6 +78,7 @@ In Stage two we will be will be creating two VPN attachments for the Transit Gat
   - Change the Vendor to Generic and click download
   - Find the file you just downloaded and rename it to **CONNECTION1CONFIG.TXT**
   - Now repeat this process for ONPREM-ROUTER 2 but rename the file to **CONNECTION2CONFIG.TXT**
+- 
 
 
 
