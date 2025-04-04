@@ -37,7 +37,7 @@ Make sure the stack has moved to a **create complete** state before moving on.
    - Right click ONPREM-SERVER2 and click connect and use session manager to connect to the instance
    - Once connected run the command **ping IP_ADDRESS_OF_AWS_EC2-B** and there should be no response
    - Click terminate on Session Manager and that is the end of Stage 1.
-   - <img src="https://github.com/user-attachments/assets/f09cc632-dd6a-4899-ae5b-9844aea936af" alt="image" width="820" height="240"/>
+   <img src="https://github.com/user-attachments/assets/f09cc632-dd6a-4899-ae5b-9844aea936af" alt="image" width="820" height="240"/>
 
 
 ## STAGE TWO
