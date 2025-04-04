@@ -42,7 +42,32 @@ Make sure the stack has moved to a **create complete** state before moving on.
 
 ## STAGE TWO
 
+In Stage two we will be will be creating two VPN attachments for the Transit Gateway. This has the effect of creating two VPN connections, 1 for each of the customer gateways. Each connection has 2 Tunnels: one between AWS Endpoint A => Customer Gateway and one between AWS Endpoint B => Customer Gateway.
 
+  - To start move into the VPC console and scroll down and click on [Transit Gateway Attachments](https://us-east-1.console.aws.amazon.com/vpcconsole/home?region=us-east-1#TransitGatewayAttachments:)
+    - Click Create Transit Gateway Attachment
+    - Set the Transit Gateway ID to A4LTGW and the attachment type to VPN
+    - Select Existing for Customer Gateway
+    - Click Customer gateway ID dropdown and select ONPREM-ROUTER1
+    - Click Dynamic (requires BGP) for Routing options
+    - Click Enable Acceleration
+    - Click Create Attachment
+    - Do the same process for ONPREM-ROUTER 2
+  - Now scroll back up on the left bar and click [Site-to-Site VPN](https://us-east-1.console.aws.amazon.com/vpcconsole/home?region=us-east-1#VpnConnections:)
+    - In another tab above **Site-to-Site VPN** open **Customer Gateways**
+    - Now match the Customer Gateway ID from **Customer Gateways** to **Site-to-Site VPN**
+![image](https://github.com/user-attachments/assets/8a551a30-da78-4c84-b842-800dbaf3bcfd)
+![image](https://github.com/user-attachments/assets/e62cae85-23eb-4efd-aba9-0be1ffc22231)
+<br>
+
+- On **Site-to-Site VPN** right-click on the ONPREM-ROUTER1 VPN and click download configurations
+  - Change the Vendor to Generic and click download
+  - Find the file you just downloaded and rename it to **CONNECTION1CONFIG.TXT**
+  - Now repeat this process for ONPREM-ROUTER 2 but rename the file to **CONNECTION2CONFIG.TXT**
+
+
+
+      
 
 
 
