@@ -78,8 +78,21 @@ In Stage two we will be will be creating two VPN attachments for the Transit Gat
   - Change the Vendor to Generic and click download
   - Find the file you just downloaded and rename it to **CONNECTION1CONFIG.TXT**
   - Now repeat this process for ONPREM-ROUTER 2 but rename the file to **CONNECTION2CONFIG.TXT**
-- 
+- At this point, we will be extracting important configuration items from the two files we have just downloaded.
+  - Open the CONNECTION1CONFIG.TXT and also this [document template](https://raw.githubusercontent.com/acantril/learn-cantrill-io-labs/master/aws-hybrid-bgpvpn/02_INSTRUCTIONS/DemoValueTemplate.md) which will help us note down important values.
+  -  There will be detailed instructions inside the document template on how to extract all of the configuration variables you will need.
+  -  Finish writing down all the values inside the document template.
+  -  Do this for both CONNECTION1CONFIG.TXT and CONNECTION2CONFIG.TXT
+  -  This will be the end of Stage 2.
 
+ <br>
+ 
+![image](https://github.com/user-attachments/assets/f2fe5b1d-958e-484d-8eae-b3fd7932c431)
+
+<br>
+
+## STAGE THREE
+ 
 
 
       
