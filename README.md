@@ -22,6 +22,27 @@ Make sure the stack has moved to a **create complete** state before moving on.
   - Set the BGP ASN to 65016
   - Set the IP address to Router1Public's IP address under the CloudFormation Stack
   - Scroll down and click Create Customer Gateway
+- We are now going to create the second customer gatweay object
+  - Follow the same instructions as above but set the name to ONPREM-ROUTER2
+  - Set the BGP ASN to 65016
+  - Set the IP address to Router2Public's IP address under the CloudFormation Stack
+  - Scroll down and click Create Customer Gateway
+  - It should look like this before moving on with the IP addresses being adjust to your own
+  
+ ![image](https://github.com/user-attachments/assets/db70d8e0-d8f3-4413-93b9-1038e50339a2)
+
+ - Now at this point we are going to verify that there is no connectivity between the AWS side and the on-premise side.
+   - Move into the EC2 console and into instances
+   - Click on AWS-EC2-B and copy the Private IPv4 address under details
+   - Right click ONPREM-SERVER2 and click connect and use session manager to connect to the instance
+   - Once connected run the command **ping IP_ADDRESS_OF_AWS_EC2-B** and there should be no response
+   - Click terminate on Session Manager and that is the end of Stage 1.
+   - <img src="https://github.com/user-attachments/assets/f09cc632-dd6a-4899-ae5b-9844aea936af" alt="image" width="820" height="240"/>
+
+
+## STAGE TWO
+
+
 
 
 
