@@ -93,7 +93,18 @@ In Stage two we will be will be creating two VPN attachments for the Transit Gat
 
 ## STAGE THREE
  
+In Stage 3 we will be configuring each of the on premises Ubuntu, strong Swan Routers to create IPSEC tunnels to AWS. Each Router will create 2 IPSEC tunnels each going to a different AWS Endpoint. Make sure before starting this stage that both VPN connections are in an available state. 
 
+- First move into the EC2 console and click on instances
+  - Select ONPREM-ROUTER 1 right click and then connect
+  - Connect using session manager
+  - Once connected type in **sudo bash** to gain root permissions
+  - Then type **cd /home/ubuntu/demo_assets/**
+  - Type **nano ipsec.conf**
+  - Using the documents template replace **ROUTER1_PRIVATE_IP, CONN1_TUNNEL1_ONPREM_OUTSIDE_IP, CONN1_TUNNEL1_AWS_OUTSIDE_IP, CONN1_TUNNEL1_AWS_OUTSIDE_IP, and, ROUTER1_PRIVATE_IP, CONN1_TUNNEL2_ONPREM_OUTSIDE_IP, CONN1_TUNNEL2_AWS_OUTSIDE_IP, CONN1_TUNNEL2_AWS_OUTSIDE_IP**
+  - Save your changes with **ctrl + o and ctrl + x** and then type **nano ipsec.secrets**
+  - Then replace the values **CONN1_TUNNEL1_ONPREM_OUTSIDE_IP, CONN1_TUNNEL1_AWS_OUTSIDE_IP, CONN1_TUNNEL1_PresharedKey, CONN1_TUNNEL2_ONPREM_OUTSIDE_IP, CONN1_TUNNEL2_AWS_OUTSIDE_IP, CONN1_TUNNEL2_PresharedKey** with the document template values.
+  - Save your changes the same way and then type **nano ipsec-vti.sh**
 
       
 
