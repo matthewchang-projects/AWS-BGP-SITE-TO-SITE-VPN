@@ -102,16 +102,21 @@ In Stage 3 we will be configuring each of the on premises Ubuntu, strong Swan Ro
   - Then type **cd /home/ubuntu/demo_assets/**
   - Type **nano ipsec.conf**
   - Using the documents template replace **ROUTER1_PRIVATE_IP, CONN1_TUNNEL1_ONPREM_OUTSIDE_IP, CONN1_TUNNEL1_AWS_OUTSIDE_IP, CONN1_TUNNEL1_AWS_OUTSIDE_IP, and, ROUTER1_PRIVATE_IP, CONN1_TUNNEL2_ONPREM_OUTSIDE_IP, CONN1_TUNNEL2_AWS_OUTSIDE_IP, CONN1_TUNNEL2_AWS_OUTSIDE_IP**
+![image](https://github.com/user-attachments/assets/fe9ea227-ec48-4adc-bade-b18e827e8e5a)
+
   - Save your changes with **ctrl + o and ctrl + x** and then type **nano ipsec.secrets**
   - Then replace the values **CONN1_TUNNEL1_ONPREM_OUTSIDE_IP, CONN1_TUNNEL1_AWS_OUTSIDE_IP, CONN1_TUNNEL1_PresharedKey, CONN1_TUNNEL2_ONPREM_OUTSIDE_IP, CONN1_TUNNEL2_AWS_OUTSIDE_IP, CONN1_TUNNEL2_PresharedKey** with the document template values.
+![image](https://github.com/user-attachments/assets/78c1eeee-2d5d-47cd-bfcf-30421be0bb7e)
+
   - Save your changes the same way and then type **nano ipsec-vti.sh**
   - Then replace the values **CONN1_TUNNEL1_ONPREM_INSIDE_IP (ensuring the /30 is at the end), CONN1_TUNNEL1_AWS_INSIDE_IP (ensuring the /30 is at the end), CONN1_TUNNEL2_ONPREM_INSIDE_IP (ensuring the /30 is at the end), CONN1_TUNNEL2_AWS_INSIDE_IP (ensuring the /30 is at the end)**
+![image](https://github.com/user-attachments/assets/766f12bb-1f28-486e-ad4b-56592921b498)
+
   - Save your changes and then copy the three files to the etc directory using cp ipsec* /etc
   - Then to make the file executable use the command **chmod +x /etc/ipsec-vti.sh**
   - Then type **systemctl restart strongswan** to restart StrongSwan and type **ifconfig**
   - You should see two virtual tunnels vti1 and vti2 which means that the two tunnels are connected and active in AWS.
-
-<img src="https://github.com/user-attachments/assets/b33dcfd4-eeef-4b19-b0b5-2764d9751164" width="550" height="300" alt="image"/>
+  - <img src="https://github.com/user-attachments/assets/b33dcfd4-eeef-4b19-b0b5-2764d9751164" width="550" height="300" alt="image"/>
 
 <br>
 
@@ -129,13 +134,16 @@ In Stage 3 we will be configuring each of the on premises Ubuntu, strong Swan Ro
   - Then to make the file executable use the command **chmod +x /etc/ipsec-vti.sh**
   - Then type **systemctl restart strongswan** to restart StrongSwan and type **ifconfig**
   - You should again see two virtual tunnels vti1 and vti2 which means that the two tunnels are connected and active in AWS.
-
-<img src="https://github.com/user-attachments/assets/72ac29c3-8b04-4a09-8b20-9d6f7a049cd5" width="550" height="300" alt="image"/>
+  - <img src="https://github.com/user-attachments/assets/72ac29c3-8b04-4a09-8b20-9d6f7a049cd5" width="550" height="300" alt="image"/>
 
 <br>
 
-- This is the end of Stage 3    
-  
+- This is the end of Stage 3. We have now connected the AWS VPC endpoint to the On premise routers.
+
+<br>
+
+  ![image](https://github.com/user-attachments/assets/c0b5f026-3e68-46cc-bab1-cf08fff69a27)
+
     
 
 
