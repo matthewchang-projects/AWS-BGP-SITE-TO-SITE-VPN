@@ -111,6 +111,11 @@ In Stage 3 we will be configuring each of the on premises Ubuntu, strong Swan Ro
   - Then type **systemctl restart strongswan** to restart StrongSwan and type **ifconfig**
   - You should see two virtual tunnels vti1 and vti2 which means that the two tunnels are connected and active in AWS.
 
+<img src="https://github.com/user-attachments/assets/b33dcfd4-eeef-4b19-b0b5-2764d9751164" width="550" height="300" alt="image" />
+
+<br>
+
+
 
 
       
