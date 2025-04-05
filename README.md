@@ -105,6 +105,13 @@ In Stage 3 we will be configuring each of the on premises Ubuntu, strong Swan Ro
   - Save your changes with **ctrl + o and ctrl + x** and then type **nano ipsec.secrets**
   - Then replace the values **CONN1_TUNNEL1_ONPREM_OUTSIDE_IP, CONN1_TUNNEL1_AWS_OUTSIDE_IP, CONN1_TUNNEL1_PresharedKey, CONN1_TUNNEL2_ONPREM_OUTSIDE_IP, CONN1_TUNNEL2_AWS_OUTSIDE_IP, CONN1_TUNNEL2_PresharedKey** with the document template values.
   - Save your changes the same way and then type **nano ipsec-vti.sh**
+  - Then replace the values **CONN1_TUNNEL1_ONPREM_INSIDE_IP (ensuring the /30 is at the end), CONN1_TUNNEL1_AWS_INSIDE_IP (ensuring the /30 is at the end), CONN1_TUNNEL2_ONPREM_INSIDE_IP (ensuring the /30 is at the end), CONN1_TUNNEL2_AWS_INSIDE_IP (ensuring the /30 is at the end)**
+  - Save your changes and then copy the three files to the etc directory using cp ipsec* /etc
+  - Then to make the file executable use the command **chmod +x /etc/ipsec-vti.sh**
+  - Then type **systemctl restart strongswan** to restart StrongSwan and type **ifconfig**
+  - You should see two virtual tunnels vti1 and vti2 which means that the two tunnels are connected and active in AWS.
+
+
 
       
 
