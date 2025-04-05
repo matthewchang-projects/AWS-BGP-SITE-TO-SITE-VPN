@@ -114,6 +114,7 @@ In Stage 3 we will be configuring each of the on premises Ubuntu, strong Swan Ro
 <img src="https://github.com/user-attachments/assets/b33dcfd4-eeef-4b19-b0b5-2764d9751164" width="550" height="300" alt="image"/>
 
 <br>
+
 - Now we are going to the do same thing for ONPREM-ROUTER2
   - Select ONPREM-ROUTER2 and right click and connect using Session Manager
   - Once connected type in **sudo bash** to gain root permissions
@@ -132,6 +133,7 @@ In Stage 3 we will be configuring each of the on premises Ubuntu, strong Swan Ro
 <img src="https://github.com/user-attachments/assets/72ac29c3-8b04-4a09-8b20-9d6f7a049cd5" width="550" height="300" alt="image"/>
 
 <br>
+
 - This is the end of Stage 3    
   
     
