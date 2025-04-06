@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/766be301-469b-471b-a9a0-f790d4052c5f)# AWS-BGP-SITE-TO-SITE-VPN
+# AWS-BGP-SITE-TO-SITE-VPN
 
 This project is a walkthrough of an **AWS BGP Site-to-Site VPN** setup, based on the original work by **Adrian Cantrill**, used under the MIT License.
 It demonstrates how to establish a **highly available, BGP-based VPN connection** between AWS and an on-premises network. In this project, I will be creating an initial AWS environment with **2 subnets, 2 EC2 instances, a Transit Gateway (TGW), VPC attachments, and a default route pointing to the TGW.** The simulated on-premises environment will include **1 public subnet and 2 private subnets.** The public subnet hosts **two Ubuntu instances** running **StrongSwan** and acting as **VPN endpoints.** The goal of this setup is to demonstrate how BGP routing can be used to dynamically exchange routes between the AWS Transit Gateway and the on-premises routers, enabling seamless and resilient communication across the IPsec tunnels.
