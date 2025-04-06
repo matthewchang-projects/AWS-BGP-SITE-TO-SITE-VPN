@@ -1,9 +1,7 @@
-# AWS-BGP-SITE-TO-SITE-VPN
+![image](https://github.com/user-attachments/assets/766be301-469b-471b-a9a0-f790d4052c5f)# AWS-BGP-SITE-TO-SITE-VPN
 
-This project is a walkthrough of an **AWS BGP Site-to-Site VPN** setup, based on the original work by **Adrian Cantrill**, used under the MIT License. 
-It demonstrates how to establish a **highly available, BGP-based VPN connection** between AWS and an on-premises network. 
-In this project I will be creating an initial AWS environment with 2 subnets, 2 EC2 instances, a TGW and VPC attachment and a default route pointing at the TGW. 
-The simulated on-premises environment - 1 public subnet, 2 private subnets. The public subnet has 2 Ubuntu + strongSwan + Free VPN endpoints.
+This project is a walkthrough of an **AWS BGP Site-to-Site VPN** setup, based on the original work by **Adrian Cantrill**, used under the MIT License.
+It demonstrates how to establish a **highly available, BGP-based VPN connection** between AWS and an on-premises network. In this project, I will be creating an initial AWS environment with **2 subnets, 2 EC2 instances, a Transit Gateway (TGW), VPC attachments, and a default route pointing to the TGW.** The simulated on-premises environment will include **1 public subnet and 2 private subnets.** The public subnet hosts **two Ubuntu instances** running **StrongSwan** and acting as **VPN endpoints.** The goal of this setup is to demonstrate how BGP routing can be used to dynamically exchange routes between the AWS Transit Gateway and the on-premises routers, enabling seamless and resilient communication across the IPsec tunnels.
 
 <br>
 
@@ -56,7 +54,8 @@ This is what we have created so far
 
 ## STAGE TWO
 
-In Stage two we will be will be creating two VPN attachments for the Transit Gateway. This has the effect of creating two VPN connections, 1 for each of the customer gateways. Each connection has 2 Tunnels: one between AWS Endpoint A => Customer Gateway and one between AWS Endpoint B => Customer Gateway.
+In Stage 2, we will create two VPN attachments for the Transit Gateway, resulting in two VPN connections—one for each Customer Gateway.
+Each VPN connection includes two IPsec tunnels: One from AWS Endpoint A to the Customer Gateway, One from AWS Endpoint B to the Customer Gateway.
 
   - To start move into the VPC console and scroll down and click on [Transit Gateway Attachments](https://us-east-1.console.aws.amazon.com/vpcconsole/home?region=us-east-1#TransitGatewayAttachments:)
     - Click Create Transit Gateway Attachment
@@ -93,7 +92,7 @@ In Stage two we will be will be creating two VPN attachments for the Transit Gat
 
 ## STAGE THREE
  
-In Stage 3 we will be configuring each of the on premises Ubuntu, strong Swan Routers to create IPSEC tunnels to AWS. Each Router will create 2 IPSEC tunnels each going to a different AWS Endpoint. Make sure before starting this stage that both VPN connections are in an available state. 
+In Stage 3, we will configure each of the on-premises Ubuntu routers, running StrongSwan, to establish IPsec tunnels to AWS. Each router will create two IPsec tunnels, with each tunnel connecting to a different AWS VPN endpoint for redundancy and high availability. Before proceeding, ensure that both VPN connections in the AWS console are in the **Available** state.
 
 - First move into the EC2 console and click on instances
   - Select ONPREM-ROUTER 1 right click and then connect
@@ -143,6 +142,85 @@ In Stage 3 we will be configuring each of the on premises Ubuntu, strong Swan Ro
 <br>
 
   ![image](https://github.com/user-attachments/assets/c0b5f026-3e68-46cc-bab1-cf08fff69a27)
+
+## STAGE FOUR
+
+In Stage 4, we’ll build on the IPsec tunnels established in Stage 3 by configuring BGP (Border Gateway Protocol) sessions over each tunnel. These BGP sessions will enable the on-premises routers to dynamically exchange routing information with the AWS Transit Gateway. Once BGP is configured and routes are exchanged, traffic will be able to flow seamlessly between the AWS cloud and your on-premises network. To support BGP functionality, we will install and configure FRR (Free Range Routing) during this stage.
+
+- To begin we will be installing FRR onto Router 1 and Router 2 with a pre-installed script.
+  - Move into the **EC2** Console and right click on your **ONPREM-ROUTER 1** instance and connect through Session Manager.
+  - Type **sudo bash** then **cd /home/ubuntu/demo_assets** then **chmod +x ffrouting-install.sh** to make the **ffrouting-install.sh** file executable.
+  - The type **./ffrouting-install.sh** to run the install process. 
+  - In a different **EC2** tab do the same process and commands with the **ONPREM-ROUTER2** instance connecting through Session Manager
+  - Type **sudo bash** then **cd /home/ubuntu/demo_assets** then **chmod +x ffrouting-install.sh** to make the **ffrouting-install.sh** file executable.
+  - The type **./ffrouting-install.sh** to run the install process.
+  - This process will take about 10-20 minutes and we will need both installations to be completed before moving on.
+  - Once completed you will type **vtysh** on Router 1 as we will be configuring BGP for the On Premise side of this architecture
+  - Then **conf t**
+  - **frr defaults traditional**
+  - **router bgp 65016**
+  - **neighbor CONN1_TUNNEL1_AWS_BGP_IP remote-as 64512**
+  - **neighbor CONN1_TUNNEL2_AWS_BGP_IP remote-as 64512**
+  - no bgp ebgp-requires-policy**
+  - **address-family ipv4 unicast**
+  - **redistribute connected**
+  - **exit-address-family**
+  - **exit**
+  - **exit**
+  - **wr**
+  - **exit**
+  - **sudo reboot**
+- ONPREM-ROUTER1, once reactivated, will function as both an **IPSEC endpoint and a BGP endpoint**, facilitating route exchanges with the **AWS transit gateway.**
+  - Now do the same process for Router 2
+  - **vtysh**
+  - Then **conf t**
+  - **frr defaults traditional**
+  - **router bgp 65016**
+  - **neighbor CONN1_TUNNEL1_AWS_BGP_IP remote-as 64512**
+  - **neighbor CONN1_TUNNEL2_AWS_BGP_IP remote-as 64512**
+  - no bgp ebgp-requires-policy**
+  - **address-family ipv4 unicast**
+  - **redistribute connected**
+  - **exit-address-family**
+  - **exit**
+  - **exit**
+  - **wr**
+  - **exit**
+  - **sudo reboot**
+- ONPREM-ROUTER2, once reactivated, will function as both an **IPSEC endpoint and a BGP endpoint**, facilitating route exchanges with the **AWS transit gateway.**
+  - You can now verify if the tunnels are up by moving into the **VPC** console and then **Site-to-Site VPN connections** and click **Tunnel details**
+  - You can also see this in **Transit Gateway Route Tables** and under **Routes**, all the different routes we have configured.
+  - Finally we can also verify this by connecting to **ONPREM-SERVER2** via **Session Manager** and then running **ping IP_ADDRESS_OF_EC2-B**
+  - And the other way around connect to **EC2-B** via **Session Manager** and then running **ping IP_ADDRESS_OF_ONPREM-SERVER2**
+
+ <br>
+    
+- This is the end of Stage 4 and the final architecture that has been created.
+
+<br> 
+
+  ![image](https://github.com/user-attachments/assets/3b3f6b3f-836e-4b1a-92e3-71360bda7e92)
+
+## Stage Five
+
+In Stage 5 we will be returning our AWS account back to how it was before this project
+
+- First we will Return move to the [VPC Console](https://us-east-1.console.aws.amazon.com/vpcconsole/home?region=us-east-1#VpnConnections:sort=VpnConnectionId)
+- Then delete both VPN Connections
+- Move to [Customer Gateways](https://console.aws.amazon.com/vpc/home?region=us-east-1#CustomerGateways:sort=CustomerGatewayId)
+- Delete both Customer Gateways you created earlier
+- Open a new tab into [CloudFormation](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/)
+- Delete the ONPREM stack and wait for the VPN connections to full delete
+- Finally delete the AWS Stack
+
+
+
+
+
+
+
+
+
 
     
 
